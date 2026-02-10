@@ -148,6 +148,20 @@ Fetches and displays all products from your CREEM dashboard.
 php artisan creem:sync-products
 ```
 
+## Demo Application
+
+A full-featured demo application is included in the `demo` directory. It showcases:
+- **Pricing Plans**: Beautiful UI for plan selection.
+- **Checkout Flow**: Native integration with the CREEM checkout.
+- **Customer Portal**: One-click billing management.
+- **Webhook Handling**: Real-time event listening and logging.
+
+To run the demo:
+1. `cd demo`
+2. `composer install`
+3. `cp .env.example .env` (Add your `CREEM_API_KEY`)
+4. `php artisan serve`
+
 ## Testing
 
 ```bash
