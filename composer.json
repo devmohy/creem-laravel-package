@@ -1,0 +1,48 @@
+{
+    "name": "creem/creem-laravel",
+    "description": "Official Laravel package for CREEM",
+    "type": "library",
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "^10.0|^11.0",
+        "illuminate/http": "^10.0|^11.0",
+        "guzzlehttp/guzzle": "^7.8"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Creem\\CreemLaravel\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Creem\\CreemLaravel\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mohammed Yayah",
+            "email": "yayahmohammed@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Creem\\CreemLaravel\\CreemServiceProvider"
+            ],
+            "aliases": {
+                "Creem": "Creem\\CreemLaravel\\Facades\\Creem"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^8.0",
+        "laravel/pint": "^1.13"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
