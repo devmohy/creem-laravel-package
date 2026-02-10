@@ -1,7 +1,3 @@
-<p align="center">
-    <img src="art/logo.png" width="300" alt="CREEM Laravel Logo">
-</p>
-
 # CREEM Laravel Package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/creem/creem-laravel.svg?style=flat-square)](https://packagist.org/packages/creem/creem-laravel)
