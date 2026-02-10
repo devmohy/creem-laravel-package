@@ -1,5 +1,5 @@
 {
-    "name": "creem/creem-laravel",
+    "name": "devmohy/creem-laravel",
     "description": "Official Laravel package for CREEM",
     "type": "library",
     "require": {

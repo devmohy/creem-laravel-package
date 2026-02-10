@@ -14,5 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Silencing deprecations for third-party packages (e.g. Mockery) on PHP 8.4
+        error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
     })->create();

@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Http;
+use Creem\CreemLaravel\Events\CheckoutSucceeded;
+use App\Listeners\CreemWebhookListener;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,9 +23,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        \Illuminate\Support\Facades\Event::listen(
-            \Creem\CreemLaravel\Events\CheckoutSucceeded::class,
-            \App\Listeners\CreemWebhookListener::class
+        Event::listen(
+            CheckoutSucceeded::class,
+            CreemWebhookListener::class
         );
+
+        // Zero-config Demo Mocking
+        // We use hardcoded paths instead of route() to prevent RouteNotFoundException during booting
+        Http::fake([
+            'https://api.creem.io/v1/checkouts' => Http::response([
+                'checkout_url' => '/dashboard?mocked=true'
+            ], 200),
+            'https://api.creem.io/v1/customer-portal' => Http::response([
+                'portal_url' => 'https://creem.io/mock-portal'
+            ], 200),
+        ]);
     }
 }

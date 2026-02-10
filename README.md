@@ -1,8 +1,8 @@
 # CREEM Laravel Package
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/creem/creem-laravel.svg?style=flat-square)](https://packagist.org/packages/creem/creem-laravel)
-[![Total Downloads](https://img.shields.io/packagist/dt/creem/creem-laravel.svg?style=flat-square)](https://packagist.org/packages/creem/creem-laravel)
-[![License](https://img.shields.io/packagist/l/creem/creem-laravel.svg?style=flat-square)](https://packagist.org/packages/creem/creem-laravel)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/devmohy/creem-laravel.svg?style=flat-square)](https://packagist.org/packages/devmohy/creem-laravel)
+[![Total Downloads](https://img.shields.io/packagist/dt/devmohy/creem-laravel.svg?style=flat-square)](https://packagist.org/packages/devmohy/creem-laravel)
+[![License](https://img.shields.io/packagist/l/devmohy/creem-laravel.svg?style=flat-square)](https://packagist.org/packages/devmohy/creem-laravel)
 
 Official Laravel package for [CREEM](https://creem.io), providing a clean, Laravel-native way to integrate payments, subscriptions, and webhooks.
 
@@ -20,7 +20,7 @@ Official Laravel package for [CREEM](https://creem.io), providing a clean, Larav
 You can install the package via composer:
 
 ```bash
-composer require creem/creem-laravel
+composer require devmohy/creem-laravel
 ```
 
 You should publish the config file with:
