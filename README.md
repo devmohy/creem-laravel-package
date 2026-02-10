@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="art/logo.png" width="300" alt="CREEM Laravel Logo">
+</p>
+
 # CREEM Laravel Package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/creem/creem-laravel.svg?style=flat-square)](https://packagist.org/packages/creem/creem-laravel)
@@ -12,6 +16,8 @@ Official Laravel package for [CREEM](https://creem.io), providing a clean, Larav
 - **Webhook Integration**: Middleware-protected webhook routing with automatic event dispatching.
 - **Artisan Commands**: Easily manage your CREEM configuration and sync products.
 - **SaaS Ready**: Designed for subscriptions and one-time payments.
+- **CI/CD Ready**: Pre-configured GitHub Actions for automated testing.
+- **Code Quality**: Built-in support for Laravel Pint to maintain clean code.
 
 ## Installation
 
@@ -64,6 +70,37 @@ if ($response->successful()) {
 ```php
 $product = Creem::getProduct('prod_12345');
 $allProducts = Creem::getProducts();
+```
+
+### Subscription Management
+
+```php
+// Cancel a subscription
+Creem::cancelSubscription('sub_123');
+
+// Update a subscription (e.g., change plan)
+Creem::updateSubscription('sub_123', [
+    'plan_id' => 'plan_premium',
+]);
+```
+
+### Customer Portal
+
+Generate a secure link for users to manage their billing:
+
+```php
+$response = Creem::createPortalLink([
+    'customer_id' => 'cus_123',
+    'return_url' => route('dashboard'),
+]);
+
+return redirect($response->json('portal_url'));
+```
+
+### Coupons
+
+```php
+$coupon = Creem::getCoupon('SAVE10');
 ```
 
 ### Webhooks
@@ -130,6 +167,16 @@ If you discover any security related issues, please email hello@creem.io instead
 - [Mohammed Yayah](https://github.com/devmohy)
 - [CREEM](https://github.com/creem)
 
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Community
+
+- [Issue Tracker](https://github.com/devmohy/creem-laravel-package/issues)
+- [Pull Requests](https://github.com/devmohy/creem-laravel-package/pulls)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## License
 
