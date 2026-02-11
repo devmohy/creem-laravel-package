@@ -15,6 +15,14 @@ return [
 
     /**
      * The base URL for the CREEM API.
+     * Automatically switches between test and production:
+     * - Test keys (creem_test_*): https://test-api.creem.io/v1
+     * - Live keys (creem_live_*): https://api.creem.io/v1
      */
-    'api_base_url' => env('CREEM_API_BASE_URL', 'https://api.creem.io/v1'),
+    'api_base_url' => env('CREEM_API_BASE_URL', function () {
+        $apiKey = env('CREEM_API_KEY', '');
+        return str_starts_with($apiKey, 'creem_test_')
+            ? 'https://test-api.creem.io/v1'
+            : 'https://api.creem.io/v1';
+    }),
 ];

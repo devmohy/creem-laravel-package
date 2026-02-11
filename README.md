@@ -150,17 +150,30 @@ php artisan creem:sync-products
 
 ## Demo Application
 
-A full-featured demo application is included in the `demo` directory. It showcases:
-- **Pricing Plans**: Beautiful UI for plan selection.
-- **Checkout Flow**: Native integration with the CREEM checkout.
-- **Customer Portal**: One-click billing management.
-- **Webhook Handling**: Real-time event listening and logging.
+A fully functional demo application is included in the `demo/` directory, showcasing:
 
-To run the demo:
-1. `cd demo`
-2. `composer install`
-3. `cp .env.example .env` (Add your `CREEM_API_KEY`)
-4. `php artisan serve`
+- **Pricing Page**: Displays products dynamically fetched from CREEM API
+- **Checkout Flow**: Complete payment integration with CREEM
+- **Customer Portal**: Subscription management interface
+- **Webhook Handling**: Real-time event processing
+
+### Running the Demo Locally
+
+```bash
+cd demo
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan serve
+```
+
+Visit `http://127.0.0.1:8000` to see the demo in action.
+
+### Deploy Demo for Free
+
+The demo can be deployed to **Render.com** completely free! See [demo/DEPLOYMENT.md](demo/DEPLOYMENT.md) for step-by-step instructions.
+
+**Live Demo**: [Coming Soon]
 
 ## Testing
 

@@ -62,6 +62,22 @@ class Creem
     }
 
     /**
+     * Search for products.
+     *
+     * Sends a GET request to the '/products/search' endpoint to fetch all available products.
+     * This endpoint supports pagination and returns a list of products with metadata.
+     *
+     * @param array $params Optional query parameters (e.g., page, limit, filters)
+     * @return Response The HTTP response from the CREEM API, containing paginated products.
+     */
+    public function searchProducts(array $params = []): Response
+    {
+        $queryString = !empty($params) ? '?' . http_build_query($params) : '';
+        return $this->request('GET', '/products/search' . $queryString);
+    }
+
+
+    /**
      * Cancel a subscription.
      *
      * @param string $id

@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: creem-laravel-demo
+    env: php
+    region: oregon
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "php artisan serve --host=0.0.0.0 --port=$PORT"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: SESSION_DRIVER
+        value: cookie
+      - key: CACHE_DRIVER
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: CREEM_API_KEY
+        sync: false
+      - key: CREEM_WEBHOOK_SECRET
+        sync: false
+
+databases:
+  - name: creem-demo-db
+    databaseName: creem_demo
+    user: creem_user
+    plan: free

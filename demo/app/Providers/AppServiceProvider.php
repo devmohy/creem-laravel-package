@@ -28,8 +28,9 @@ class AppServiceProvider extends ServiceProvider
             CreemWebhookListener::class
         );
 
-        // Zero-config Demo Mocking
-        // We use hardcoded paths instead of route() to prevent RouteNotFoundException during booting
+        // Zero-config Demo Mocking (DISABLED - Using real API)
+        // Uncomment the lines below to test without a real API key
+        /*
         Http::fake([
             'https://api.creem.io/v1/checkouts' => Http::response([
                 'checkout_url' => '/dashboard?mocked=true'
@@ -38,5 +39,6 @@ class AppServiceProvider extends ServiceProvider
                 'portal_url' => 'https://creem.io/mock-portal'
             ], 200),
         ]);
+        */
     }
 }
