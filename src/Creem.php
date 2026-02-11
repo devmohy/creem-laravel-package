@@ -297,26 +297,9 @@ class Creem
      */
     public function getDiscount(string $identifier): Response
     {
-        // Simple heuristic: IDs often start with a prefix like 'disc_' or are distinct.
-        // However, the API accepts either discount_id or discount_code param.
-        // We will try to send it as discount_id if it looks like an ID, else code.
-        // Typically Creem IDs might be 'disc_...'.
-        // If unsure, we can just let the user pass the query params directly?
-        // documentation says: provide either discount_id OR discount_code.
-        // Let's assume if it looks like an ID (starts with disc_ or similar) we use ID.
-        // Or better, let's just inspect the string or try both?
-        // Actually, for simplicity/safety, let's treat it as code if not sure?
-        // Re-reading docs: "The unique identifier of the discount (provide either discount_id OR discount_code)"
-        
-        // Let's just try to be smart or allow explicit params.
-        // TO match previous `getCoupon($id)` behavior which likely took a code:
-        
-        $param = 'discount_code';
-        // If it starts with 'disc_', assume ID (this is an assumption, but common in Stripe-like APIs)
-        // If the user uses a code that starts with disc_, this might fail.
-        // But let's stick to a safe default if we can't tell.
-        // Actually, let's check if we can support both by just checking the string format.
-        // For now, let's assume it's a code as that's arguably more common for "getting a coupon".
+        // Determine if the identifier is likely an ID (starts with 'disc_') or a code.
+        // This simple heuristic provides a better DX by allowing a single argument.
+        $param = str_starts_with($identifier, 'disc_') ? 'discount_id' : 'discount_code';
         
         return $this->request('GET', '/discounts', [$param => $identifier]);
     }
