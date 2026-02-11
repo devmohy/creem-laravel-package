@@ -68,35 +68,114 @@ $product = Creem::getProduct('prod_12345');
 $allProducts = Creem::getProducts();
 ```
 
+### Search Products
+
+You can also search for products with detailed query parameters:
+
+```php
+$products = Creem::searchProducts([
+    'limit' => 10,
+    'page' => 1,
+    // other filters supported by CREEM API
+]);
+```
+
+### Customer Management
+
+```php
+// Get a customer
+$customer = Creem::getCustomer('cus_123');
+
+// List customers
+$customers = Creem::listCustomers([
+    'page_size' => 10,
+    'page_number' => 1,
+]);
+
+// Generate Billing Portal Link
+$response = Creem::createPortalLink([
+    'customer_id' => 'cus_123',
+]);
+
+return redirect($response->json('customer_portal_link'));
+```
+
 ### Subscription Management
 
 ```php
+// Retrieve a subscription
+$subscription = Creem::getSubscription('sub_123');
+
 // Cancel a subscription
 Creem::cancelSubscription('sub_123');
 
-// Update a subscription (e.g., change plan)
+// Pause a subscription
+Creem::pauseSubscription('sub_123');
+
+// Update a subscription (e.g., change quantity)
 Creem::updateSubscription('sub_123', [
-    'plan_id' => 'plan_premium',
+    'items' => [
+        ['id' => 'item_123', 'units' => 5]
+    ]
+]);
+
+// Upgrade a subscription
+Creem::upgradeSubscription('sub_123', [
+    'product_id' => 'prod_premium',
+    'update_behavior' => 'proration-charge-immediately',
 ]);
 ```
 
-### Customer Portal
+### Licenses
 
-Generate a secure link for users to manage their billing:
+Manage software licenses directly from your application:
 
 ```php
-$response = Creem::createPortalLink([
+// Validate a license key
+$license = Creem::validateLicense('ABC-123-XYZ', 'instance_unique_id');
+
+if ($license->json('status') === 'active') {
+    // Grant access
+}
+
+// Activate a license
+Creem::activateLicense('ABC-123-XYZ', 'My Macbook Pro');
+
+// Deactivate a license
+Creem::deactivateLicense('ABC-123-XYZ', 'instance_unique_id');
+```
+
+### Transactions
+
+```php
+// Get a transaction
+$transaction = Creem::getTransaction('txn_123');
+
+// List transactions
+$transactions = Creem::listTransactions([
     'customer_id' => 'cus_123',
-    'return_url' => route('dashboard'),
+    'status' => 'succeeded',
 ]);
-
-return redirect($response->json('portal_url'));
 ```
 
-### Coupons
+### Discounts & Coupons
 
 ```php
-$coupon = Creem::getCoupon('SAVE10');
+// Retrieve a discount by ID or Code
+$discount = Creem::getDiscount('SAVE10');
+
+// Create a discount
+Creem::createDiscount([
+    'name' => 'Black Friday',
+    'code' => 'BF2024',
+    'type' => 'percentage',
+    'percentage' => 20,
+    'duration' => 'once',
+    'applies_to_products' => ['prod_123'],
+]);
+
+// Delete a discount
+Creem::deleteDiscount('disc_123');
 ```
 
 ### Webhooks
@@ -128,6 +207,30 @@ protected $listen = [
         \App\Listeners\HandleSuccessfulPayment::class,
     ],
 ];
+```
+
+#### Example Listener
+
+Here is how you might implement a listener to handle a successful checkout:
+
+```php
+namespace App\Listeners;
+
+use Creem\CreemLaravel\Events\CheckoutSucceeded;
+use Illuminate\Support\Facades\Log;
+
+class HandleSuccessfulPayment
+{
+    public function handle(CheckoutSucceeded $event): void
+    {
+        $payload = $event->payload;
+        $customerId = $payload['customer_id'] ?? null;
+
+        Log::info("Payment received for customer: {$customerId}");
+
+        // Grant access, update database, email user, etc.
+    }
+}
 ```
 
 ## Commands
