@@ -45,7 +45,7 @@ class CreemTest extends TestCase
     public function it_can_get_all_products()
     {
         Http::fake([
-            'https://api.creem.io/v1/products' => Http::response([
+            'https://api.creem.io/v1/products/search*' => Http::response([
                 ['id' => 'prod_1', 'name' => 'Product 1'],
                 ['id' => 'prod_2', 'name' => 'Product 2'],
             ], 200),
@@ -87,7 +87,7 @@ class CreemTest extends TestCase
     public function it_can_get_a_coupon()
     {
         Http::fake([
-            'https://api.creem.io/v1/coupons/COUPON10' => Http::response(['id' => 'COUPON10', 'percent_off' => 10], 200),
+            'https://api.creem.io/v1/discounts*' => Http::response(['code' => 'COUPON10', 'percent_off' => 10], 200),
         ]);
 
         $response = Creem::getCoupon('COUPON10');
@@ -100,12 +100,12 @@ class CreemTest extends TestCase
     public function it_can_create_a_portal_link()
     {
         Http::fake([
-            'https://api.creem.io/v1/customer-portal' => Http::response(['portal_url' => 'https://creem.io/portal/123'], 201),
+            'https://api.creem.io/v1/customers/billing' => Http::response(['customer_portal_link' => 'https://creem.io/portal/123'], 200),
         ]);
 
         $response = Creem::createPortalLink(['customer_id' => 'cus_123']);
 
         $this->assertTrue($response->successful());
-        $this->assertEquals('https://creem.io/portal/123', $response->json('portal_url'));
+        $this->assertEquals('https://creem.io/portal/123', $response->json('customer_portal_link'));
     }
 }
